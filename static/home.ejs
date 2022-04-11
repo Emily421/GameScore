@@ -1,12 +1,170 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>GameScore</title>
-</head>
-<body>
-<h1>GameScore - inspired by Wordle</h1>
-<h2>Created by the Scrumpateers - Emily, Connor, and Gabe.</h2>
-<p>This game will ...</p>
 
+<head>
+    <title>GameScore</title>
+    <style>
+        button {
+            background-color: #41bcca;
+            border: none;
+            border-radius: 20%;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #3d6677
+        }
+
+        button:active {
+            background-color: #74a6ad;
+        }
+
+        body {
+            text-align: center;
+            width: 50%;
+            margin: auto;
+        }
+
+        div {
+            text-align: center;
+            margin: auto;
+            padding: 5px;
+        }
+    </style>
+    <script>
+        guess = "_ _ _ _ _";
+        theAnswer = "HELLO";
+        guesses = 0;
+
+        //This function replaces the "_" closest to the left with the guessed letter and displays the result.
+        function getLetter(letter) {
+            if (guess.indexOf("_") != true) {
+                guess = guess.replace("_", letter)
+            }
+            document.getElementById("answer").innerHTML = guess;
+        }
+
+        //This function checks for the letter furthest to the right and replaces it with a "_".
+        function backspace() {
+            for (var i = guess.length; i >= 0; i--) {
+                if (guess.charAt(i).match(/[A-Z]/i) != null) {
+                    guess = guess.substring(0, i) + "_" + guess.substring(i + 1)
+                    break;
+                }
+            }
+            document.getElementById("answer").innerHTML = guess;
+        }
+
+        function submit() {
+            guesses++;
+            document.getElementById("guess" + guesses).innerHTML = guesses + ": " + guess;
+            if (guess.replace(/\s/g, '') === theAnswer) {
+                document.getElementById("result").innerHTML = "Correct!";
+            } else if (guesses == 6) {
+                document.getElementById("result").innerHTML = "Incorrect! The word was " + theAnswer;
+            }
+
+            if (theAnswer.indexOf(guess.charAt(0)) < 0) {
+                document.getElementById(guess.charAt(0)).style.background = '#2e2e2d';
+            }else if(guess.charAt(0) === theAnswer.charAt(0)){
+                document.getElementById(guess.charAt(0)).style.background = '#3A8065';
+            }else{
+                document.getElementById(guess.charAt(0)).style.background = '#e3c020';
+            }
+
+            if (theAnswer.indexOf(guess.charAt(2)) < 0) {
+                document.getElementById(guess.charAt(2)).style.background = '#2e2e2d';
+            }else if(guess.charAt(2) === theAnswer.charAt(1)){
+                document.getElementById(guess.charAt(2)).style.background = '#3A8065';
+            }else{
+                document.getElementById(guess.charAt(2)).style.background = '#e3c020';
+            }
+
+            if (theAnswer.indexOf(guess.charAt(4)) < 0) {
+                document.getElementById(guess.charAt(4)).style.background = '#2e2e2d';
+            }else if(guess.charAt(4) === theAnswer.charAt(2)){
+                document.getElementById(guess.charAt(4)).style.background = '#3A8065';
+            }else{
+                document.getElementById(guess.charAt(4)).style.background = '#e3c020';
+            }
+
+            if (theAnswer.indexOf(guess.charAt(6)) < 0) {
+                document.getElementById(guess.charAt(6)).style.background = '#2e2e2d';
+            }else if(guess.charAt(6) === theAnswer.charAt(3)){
+                document.getElementById(guess.charAt(6)).style.background = '#3A8065';
+            }else{
+                document.getElementById(guess.charAt(6)).style.background = '#e3c020';
+            }
+
+            if (theAnswer.indexOf(guess.charAt(8)) < 0) {
+                document.getElementById(guess.charAt(8)).style.background = '#2e2e2d';
+            }else if(guess.charAt(8) === theAnswer.charAt(4)){
+                document.getElementById(guess.charAt(8)).style.background = '#3A8065';
+            }else{
+                document.getElementById(guess.charAt(8)).style.background = '#e3c020';
+            }
+
+
+            guess = "_ _ _ _ _"
+            document.getElementById("answer").innerHTML = guess;
+        }
+    </script>
+</head>
+
+<body>
+    <h1>GameScore - inspired by Wordle</h1>
+    <h2>Created by the Scrumpateers - Emily, Connor, and Gabe.</h2>
+    <div id="guesses">
+        <h2 id="result"> </h2>
+        <h2 id="guess1">1: </h2>
+        <h2 id="guess2">2: </h2>
+        <h2 id="guess3">3: </h2>
+        <h2 id="guess4">4: </h2>
+        <h2 id="guess5">5: </h2>
+        <h2 id="guess6">6: </h2>
+    </div>
+    <h2 id="answer">_ _ _ _ _</h2>
+    <div>
+        <button type="button" id="Q" onclick="getLetter('Q')">Q</button>
+        <button type="button" id="W" onclick="getLetter('W')">W</button>
+        <button type="button" id="E" onclick="getLetter('E')">E</button>
+        <button type="button" id="R" onclick="getLetter('R')">R</button>
+        <button type="button" id="T" onclick="getLetter('T')">T</button>
+        <button type="button" id="Y" onclick="getLetter('Y')">Y</button>
+        <button type="button" id="U" onclick="getLetter('U')">U</button>
+        <button type="button" id="I" onclick="getLetter('I')">I</button>
+        <button type="button" id="O" onclick="getLetter('O')">O</button>
+        <button type="button" id="P" onclick="getLetter('P')">P</button>
+    </div>
+    <div>
+        <button type="button" id="A" onclick="getLetter('A')">A</button>
+        <button type="button" id="S" onclick="getLetter('S')">S</button>
+        <button type="button" id="D" onclick="getLetter('D')">D</button>
+        <button type="button" id="F" onclick="getLetter('F')">F</button>
+        <button type="button" id="G" onclick="getLetter('G')">G</button>
+        <button type="button" id="H" onclick="getLetter('H')">H</button>
+        <button type="button" id="J" onclick="getLetter('J')">J</button>
+        <button type="button" id="K" onclick="getLetter('K')">K</button>
+        <button type="button" id="L" onclick="getLetter('L')">L</button>
+    </div>
+    <div>
+        <button type="button" id="Z" onclick="getLetter('Z')">Z</button>
+        <button type="button" id="X" onclick="getLetter('X')">X</button>
+        <button type="button" id="C" onclick="getLetter('C')">C</button>
+        <button type="button" id="V" onclick="getLetter('V')">V</button>
+        <button type="button" id="B" onclick="getLetter('B')">B</button>
+        <button type="button" id="N" onclick="getLetter('N')">N</button>
+        <button type="button" id="M" onclick="getLetter('M')">M</button>
+    </div>
+    <div>
+        <button type="button" id="backspace" onclick="backspace()">Backspace</button>
+        <button type="button" id="submit" onclick="submit()">Submit</button>
+    </div>
 </body>
+
 </html>
