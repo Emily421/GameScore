@@ -50,6 +50,11 @@ app.get('/proposal', (request, response) => {
 	response.render('proposal.ejs')
 })
 
+app.get('/help', (request, response) => {
+  console.log('Calling instruction page on server.')
+  response.render('help.ejs')
+})
+
 // Custom 404 page.
 app.use((request, response) => {
   response.type('text/plain')
