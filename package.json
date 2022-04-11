@@ -1,6 +1,6 @@
 {
-    "name": "app-service-hello-world",
-    "description": "Simple Hello World Node.js sample for Azure App Service",
+    "name": "app-service-gamescore",
+    "description": "GameScore game based on Wordle",
     "version": "0.0.1",
     "private": true,
     "license": "MIT",
@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "ejs": "^3.1.6",
-        "express": "^4.17.3"
+        "express": "^4.17.3",
+        "mongodb": "^4.5.0"
     }
 }

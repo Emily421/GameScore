@@ -2,7 +2,7 @@ const express = require('express')
 app = express()
 // MongoDB database - tutorial from https://www.mongodb.com/blog/post/quick-start-nodejs-mongodb-how-to-get-connected-to-your-database
 randomword = "Default";
-/*const {MongoClient, Db} = require('mongodb');
+const {MongoClient, Db} = require('mongodb');
 
 async function getRandomWord(client){
   max = 4; //number of documents plus 1
@@ -27,7 +27,7 @@ async function main() {
 }
 main().catch(console.error); 
 //
-*/
+
 var url = require('url');
 const path = require('path');
 
