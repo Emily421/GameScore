@@ -2,7 +2,7 @@ const express = require('express')
 app = express()
 // MongoDB database - tutorial from https://www.mongodb.com/blog/post/quick-start-nodejs-mongodb-how-to-get-connected-to-your-database
 const {MongoClient, Db} = require('mongodb');
-
+randomword = "Default";
 async function getRandomWord(client){
   max = 4; //number of documents plus 1
   random = Math.floor(Math.random() * max);
@@ -13,7 +13,7 @@ async function getRandomWord(client){
 async function main() {
 	const uri = "mongodb+srv://gamescoreapplication:gamescore@gamescore.hhvnf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
-  try {
+/*   try {
     await client.connect();
     // Call function
     await  getRandomWord(client);
@@ -23,8 +23,9 @@ async function main() {
   } finally {
     await client.close();
   }
+*/
 }
-main().catch(console.error);
+main().catch(console.error); 
 //
 
 var url = require('url');
