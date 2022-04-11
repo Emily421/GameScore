@@ -51,6 +51,9 @@
         } 
     </style>
     <script>
+        async function reloadServer() {
+            await fetch("/reload");
+        }
         guess = "_ _ _ _ _";
         theAnswer = "HELLO";
         guesses = 0;
@@ -131,7 +134,7 @@
     </script>
 </head>
 
-<body>
+<body onload="reloadServer()">
     <h1>GameScore - inspired by Wordle</h1>
     <h2>Created by the Scrumpateers - Emily, Connor, and Gabe.</h2>
     <h2>Random word from database: </h2>

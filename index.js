@@ -25,16 +25,21 @@ async function main() {
     await client.close();
   }
 }
+
 main().catch(console.error); 
 //
 
 var url = require('url');
 const path = require('path');
+const { Server } = require('http');
+const nodemon = require('nodemon');
+const { restart } = require('nodemon');
 
 const port = process.env.PORT || 3000
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'static'))
+
 
 app.get('/',(request,response)=>{
     response.render('home.ejs', {randomword: randomword,})
@@ -49,6 +54,10 @@ app.get('/random', (request, response) => {
 app.get('/proposal', (request, response) => {
 	console.log('Calling proposal page on server.')
 	response.render('proposal.ejs')
+})
+
+app.get('/reload', (request, response) => {
+	main();
 })
 
 app.get('/help', (request, response) => {
