@@ -1,6 +1,5 @@
-# Node.js and Express Hosted on Microsoft Azure Template
-This repository serves as a template that can be used to create a Node.js and Express based website that can easily
-be hosted on Microsoft Azure.
+# GaneScore - a game based on Wordle
+This repository utlizes Express, Node.js, JavaScript, and Azure to make a similar website to the popular game Wordle.
 
 EPICS:
 As a user of GameScore, I want to be able to play the game, so I can have fun.
