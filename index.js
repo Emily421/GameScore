@@ -40,12 +40,12 @@ const { restart } = require('nodemon'); // or this one
 const port = process.env.PORT || 3000
 const bcrypt = require('bcrypt') //     Not this one either
 const passport = require('passport')    // Or this one
-//const flash = require('express-flash')
-//const session = require('express-session')
-const methodOverride = require('method-override')
+const flash = require('express-flash') // Nope
+const session = require('express-session') // No
+// const methodOverride = require('method-override')
 // var userScore = 0
 
-const initializePassport = require('./passport-config');
+// const initializePassport = require('./passport-config');
 const { initialize } = require('passport');
 initializePassport(
   passport, 
