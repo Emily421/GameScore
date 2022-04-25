@@ -1,39 +1,32 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
  }
-const express = require('express')
-app = express()
+const express               = require('express')
+const app = express()
 // MongoDB database - tutorial from https://www.mongodb.com/blog/post/quick-start-nodejs-mongodb-how-to-get-connected-to-your-database
 randomword = "Default";
-const {MongoClient, Db} = require('mongodb');
-const path = require('path');
-const { Server } = require('http');
-const nodemon = require('nodemon');
-const { restart } = require('nodemon');
-const { cursorTo } = require('readline');
-const { stringify } = require('querystring');
-const port = process.env.PORT || 3000
+const {MongoClient, Db}     = require('mongodb');
+const path                  = require('path');
+const { Server }            = require('http');
+const nodemon               = require('nodemon');
+const { restart }           = require('nodemon');
+const { cursorTo }          = require('readline');
+const { stringify }         = require('querystring');
+const port                  = process.env.PORT || 3000
 // Authentication Dependencies
-const bcrypt = require('bcryptjs') // BREAKS SITE
-const passport = require('passport')    // This does not cause issue
-const flash = require('express-flash') // Does not cause issue
-const session = require('express-session') // No
-const methodOverride = require('method-override') // BREAKS SITE
+const bcrypt                = require('bcryptjs') // BREAKS SITE
+const passport              = require('passport')    // This does not cause issue
+const flash                 = require('express-flash') // Does not cause issue
+const session               = require('express-session') // No
+const methodOverride        = require('method-override') // BREAKS SITE
 
-const initializePassport = require('./passport-config') // Not this one
+const initializePassport    = require('./passport-config') // Not this one
 initializePassport (
   passport, 
   username => users.find(user => user.username === username),
   id => users.find(user => user.id === id)
 )
-/*
-const { initialize, use } = require('passport');
-initializePassport(
-  passport, 
-  username => users.find(user => user.username === username),
-  id => users.find(user => user.id === id)
- )
-*/
+
 const users = []
 var userScore = 0
 async function getRandomWord(client){
@@ -86,7 +79,7 @@ app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'static'))
 app.use(express.urlencoded({ extended: false }))
 
-app.get('/', checkAuthenticated, (request,response)=>{
+app.get('/', checkAuthenticated, (request,response)=> {
     response.render('home.ejs', {randomword: randomword, username: request.user.username, score: 0})
 })
 
@@ -157,11 +150,11 @@ app.use((err, request, response, next) => {
   response.status(500)
   response.send('500 - Server Error')
 })
-
+/*
 app.post('/',(require,response)=>{
     response.render('index.ejs');
 })
-
+*/
 
 
 function checkAuthenticated(request, response, next) {
