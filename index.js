@@ -53,11 +53,11 @@ const port = process.env.PORT || 3000
 //const bcrypt = require('bcrypt') //     This causes issue when uncommented
 const passport = require('passport')    // This does not cause issue
 const flash = require('express-flash') // Nope
-//const session = require('express-session') // No
-//const methodOverride = require('method-override') // no
+const session = require('express-session') // No
+const methodOverride = require('method-override') // no
 //var userScore = 0 // no
 
-//const initializePassport = require('./passport-config');
+const initializePassport = require('./passport-config');
 /*
 const { initialize } = require('passport');
 initializePassport(
