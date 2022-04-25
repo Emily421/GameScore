@@ -44,17 +44,17 @@ main().catch(console.error);
 var url = require('url');
 const path = require('path');
 const { Server } = require('http');
-// const nodemon = require('nodemon');
+const nodemon = require('nodemon');
 const { restart } = require('nodemon');
 const { cursorTo } = require('readline');
 const { stringify } = require('querystring');
 
 const port = process.env.PORT || 3000
-//const bcrypt = require('bcrypt') // BREAKS SITE
+// const bcrypt = require('bcrypt') // BREAKS SITE
 const passport = require('passport')    // This does not cause issue
 const flash = require('express-flash') // Does not cause issue
 const session = require('express-session') // No
-const methodOverride = require('method-override') // 
+// const methodOverride = require('method-override') // BREAKS SITE
 //var userScore = 0 // no
 
 const initializePassport = require('./passport-config'); // Not this one
