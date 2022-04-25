@@ -16,6 +16,12 @@
             font-size: 16px;
         }
 
+        p {
+            top: 0;
+            right: 0;
+            margin: auto;
+        }
+
         button:hover {
             background-color: #3d6677
         }
@@ -144,6 +150,10 @@
             Instructions
         </button>
     </a>
+    <p><%= username %> Score: <%= score %></p>
+    <form action="/logout?_method=DELETE" method="POST">
+        <button type="submit">Log Out</button>
+    </form>
     <div id="guesses">
         <h2 id="result"> </h2>
         <h2 id="guess1">1: </h2>
