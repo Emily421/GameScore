@@ -71,7 +71,8 @@
             await fetch("/reload");
         }
         guess = "_ _ _ _ _";
-        theAnswer = "HELLO";
+        var theAnswer = "<%= randomword %>";
+        theAnswer = theAnswer.toUpperCase();
         guesses = 0;
         won = false;
         score = 0;
@@ -207,11 +208,7 @@
 
 <body onload="reloadServer()">
     <h1>GameScore - Inspired by Wordle</h1>
-    <h3>Created by the Scrumpateers - Emily, Connor, and Gabe</h3>
-    <!---
-    <h3>Random word from database: </h3>
-    <h3 id="randomword"><%= randomword %></h3>
-    -->
+    <h3>Created by the Scrumpateers - Emily, Connor, and Gabe</h3>  
     <a href="help">
         <button class = "instructions">
             Instructions

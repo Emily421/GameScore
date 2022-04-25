@@ -5,10 +5,19 @@ randomword = "Default";
 const {MongoClient, Db} = require('mongodb');
 
 async function getRandomWord(client){
-  max = 4; //number of documents plus 1
+  max = 60
   random = Math.floor(Math.random() * max);
-  const randomdoc = await client.db("gamescore_words").collection("words").findOne({number: random});
-  randomword = randomdoc.name;
+  const randomdoc = await client.db("gamescore_words").collection("word_list").findOne({number: random.toString()});
+  const randomdocword = JSON.stringify(randomdoc);
+  var words = randomdocword.split(",");
+  max2 = 54
+  random2 = Math.floor(Math.random() * max2);
+  lines = words[random2];
+  var threes = lines.split(" ")
+  twos = threes[1]
+  twos = twos.replaceAll('"', '')
+  twos = twos.replaceAll('\\', '')
+  randomword = twos;
 }
 
 async function main() {
@@ -34,6 +43,8 @@ const path = require('path');
 const { Server } = require('http');
 const nodemon = require('nodemon');
 const { restart } = require('nodemon');
+const { cursorTo } = require('readline');
+const { stringify } = require('querystring');
 
 const port = process.env.PORT || 3000
 
