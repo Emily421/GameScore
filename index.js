@@ -43,6 +43,7 @@ const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
+var userScore = 0
 
 const initializePassport = require('./passport-config');
 const { initialize } = require('passport');
@@ -67,7 +68,7 @@ app.set('views', path.join(__dirname, 'static'))
 app.use(express.urlencoded({ extended: false }))
 
 app.get('/', checkAuthenticated, (request,response)=>{
-    response.render('home.ejs', {randomword: randomword, username: request.user.username, score: 0})
+    response.render('home.ejs', {randomword: randomword, username: request.user.username, score: userScore += 0})
 })
 
 app.get('/login', checkNotAuthenticated, (request, response) => {
