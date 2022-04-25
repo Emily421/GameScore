@@ -26,3 +26,5 @@ function initialize(passport, getUserbyUsername, getUserById) {
 }
 
 module.exports = initialize
+
+// Goes in static page <h3><%= username %> Score: <%= score %></h3>

@@ -1,6 +1,6 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
+// if (process.env.NODE_ENV !== 'production') {
+//  require('dotenv').config()
+// }
 const express = require('express')
 app = express()
 // MongoDB database - tutorial from https://www.mongodb.com/blog/post/quick-start-nodejs-mongodb-how-to-get-connected-to-your-database
@@ -35,56 +35,56 @@ main().catch(console.error);
 var url = require('url');
 const path = require('path');
 const { Server } = require('http');
-const nodemon = require('nodemon');
-const { restart } = require('nodemon');
+// const nodemon = require('nodemon');
+// const { restart } = require('nodemon');
 const port = process.env.PORT || 3000
-const bcrypt = require('bcrypt')
-const passport = require('passport')
-const flash = require('express-flash')
-const session = require('express-session')
-const methodOverride = require('method-override')
+// const bcrypt = require('bcrypt')
+// const passport = require('passport')
+// const flash = require('express-flash')
+// const session = require('express-session')
+// const methodOverride = require('method-override')
 // var userScore = 0
 
-const initializePassport = require('./passport-config');
-const { initialize } = require('passport');
-initializePassport(
-  passport, 
-  username => users.find(user => user.username === username),
-  id => users.find(user => user.id === id)
-)
+// const initializePassport = require('./passport-config');
+// const { initialize } = require('passport');
+// initializePassport(
+//  passport, 
+//  username => users.find(user => user.username === username),
+//  id => users.find(user => user.id === id)
+// )
 const users = []
 
-app.use(flash())
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false
-}))
-app.use(passport, initialize)
-app.use(passport.session())
-app.use(methodOverride('_method'))
+// app.use(flash())
+// app.use(session({
+//  secret: process.env.SESSION_SECRET,
+//  resave: false,
+//  saveUninitialized: false
+// }))
+// app.use(passport, initialize)
+// app.use(passport.session())
+// app.use(methodOverride('_method'))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'static'))
 app.use(express.urlencoded({ extended: false }))
 
-app.get('/', checkAuthenticated, (request,response)=>{
-    response.render('home.ejs', {randomword: randomword, username: request.user.username, score: 0})
+app.get('/', /*checkAuthenticated*/ (request,response)=>{
+    response.render('home.ejs', {randomword: randomword, /*username: request.user.username, score: 0*/})
 })
 
-app.get('/login', checkNotAuthenticated, (request, response) => {
+app.get('/login', /*checkNotAuthenticated,*/ (request, response) => {
   response.render('login.ejs')
 })
 
-app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-}))
+// app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+//  successRedirect: '/',
+//  failureRedirect: '/login',
+//  failureFlash: true
+// }))
 
-app.get('/register', checkNotAuthenticated, (request, response) => {
-  response.render('register.ejs')
-})
-
+// app.get('/register', checkNotAuthenticated, (request, response) => {
+//  response.render('register.ejs')
+// })
+/*
 app.post('/register', checkNotAuthenticated, async (request, response) => {
   try {
     const hashedPassword = await bcrypt.hash(request.body.password, 10)
@@ -98,7 +98,7 @@ app.post('/register', checkNotAuthenticated, async (request, response) => {
     response.redirect('/register')
   }
 })
-
+*/
 app.get('/random', (request, response) => {
 	console.log('Calling random word.')
 	response.type('text/plain')
@@ -144,7 +144,7 @@ app.post('/',(require,response)=>{
 })
 
 
-
+/*
 function checkAuthenticated(request, response, next) {
   if (request.isAuthenticated()) {
     return next()
@@ -158,7 +158,7 @@ function checkNotAuthenticated(request, response, next) {
   }
   next()
 }
-
+*/
 app.listen(port, () => console.log(
   `Express started at \"http://localhost:${port}\"\n` +
   `press Ctrl-C to terminate.`)
