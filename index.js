@@ -43,17 +43,17 @@ const passport = require('passport')    // Or this one
 const flash = require('express-flash') // Nope
 const session = require('express-session') // No
 const methodOverride = require('method-override') // no
-var userScore = 0 // n
+var userScore = 0 // no
 
-// const initializePassport = require('./passport-config');
-/*
+const initializePassport = require('./passport-config');
+
 const { initialize } = require('passport');
 initializePassport(
   passport, 
   username => users.find(user => user.username === username),
   id => users.find(user => user.id === id)
  )
- */
+ 
 const users = []
 
 // app.use(flash())
@@ -73,9 +73,9 @@ app.get('/', /*checkAuthenticated*/ (request,response)=>{
     response.render('home.ejs', {randomword: randomword, /*username: request.user.username, score: 0*/})
 })
 
-app.get('/login', /*checkNotAuthenticated,*/ (request, response) => {
-  response.render('login.ejs')
-})
+//app.get('/login', /*checkNotAuthenticated,*/ (request, response) => {
+//  response.render('login.ejs')
+//})
 
 // app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 //  successRedirect: '/',
