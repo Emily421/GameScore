@@ -30,8 +30,6 @@
             text-align: center;
             text-decoration: none;
             font-size: 30px;
-            width: 20%;
-            display: inline-block;
         }
         body {
             text-align: center;
@@ -88,8 +86,6 @@
         guess = "_ _ _ _ _";
         theAnswer = "HELLO";
         guesses = 0;
-        won = false;
-        score = 0;
 
         //This function replaces the "_" closest to the left with the guessed letter and displays the result.
         function getLetter(letter) {
@@ -118,11 +114,9 @@
             guesses++;
             //document.getElementById("guess" + guesses).innerHTML = guesses + ": " + guess;
             if (guess.replace(/\s/g, '') === theAnswer) {
-                won = true;
-                document.getElementById("result").innerHTML = "Correct! Score: " + getScore();
+                document.getElementById("result").innerHTML = "Correct!";
             } else if (guesses == 6) {
-                won = false;
-                document.getElementById("result").innerHTML = "Incorrect! The word was '" + theAnswer.toLowerCase() + ".' Score: " + getScore();
+                document.getElementById("result").innerHTML = "Incorrect! The word was " + theAnswer;
             }
 
             if (theAnswer.indexOf(guess.charAt(0)) < 0) {
@@ -185,44 +179,16 @@
             document.getElementById("answer").innerHTML = guess;
         }
 
-        //Changes the color of the individual letters of the guesses.
         function changeLetterColor(guesses, letter, pos, color){
             document.getElementById("g" + guesses + pos).innerHTML = letter;
             document.getElementById("g" + guesses + pos).style.background = color;
-        }
-
-        //Adds up the score.
-        function getScore(){
-            if(won == true){
-                switch (guesses){
-                    case 1:
-                        score += 500
-                    break;
-                    case 2:
-                        score += 400
-                    break;
-                    case 3:
-                        score += 300
-                    break;
-                    case 4:
-                        score += 200
-                    break;
-                    case 5:
-                        score += 100
-                    break;
-                    case 6:
-                        score += 50
-                    break;
-                }
-            }
-            return score;
         }
     </script>
 </head>
 
 <body onload="reloadServer()">
-    <h1>GameScore - Inspired by Wordle</h1>
-    <h3>Created by the Scrumpateers - Emily, Connor, and Gabe</h3>
+    <h1>GameScore - inspired by Wordle</h1>
+    <h3>Created by the Scrumpateers - Emily, Connor, and Gabe.</h3>
     <!---
     <h3>Random word from database: </h3>
     <h3 id="randomword"><%= randomword %></h3>
@@ -237,7 +203,7 @@
         <button class="logout" type="submit">Log Out</button>
     </form>
     <div id="guesses">
-        <h2 id="result"> </h2><br>
+        <h2 id="result"> </h2>
         <h2 id="g11" class="guessesFormat" style="display: inline"></h2> <h2 id="g12" class="guessesFormat" style="display: inline"></h2> <h2 id="g13" class="guessesFormat" style="display: inline"></h2> <h2 id="g14" class="guessesFormat" style="display: inline"></h2> <h2 id="g15" class="guessesFormat" style="display: inline"></h2><br><br><br>
         <h2 id="g21" class="guessesFormat" style="display: inline"></h2> <h2 id="g22" class="guessesFormat" style="display: inline"></h2> <h2 id="g23" class="guessesFormat" style="display: inline"></h2> <h2 id="g24" class="guessesFormat" style="display: inline"></h2> <h2 id="g25" class="guessesFormat" style="display: inline"></h2><br><br><br>
         <h2 id="g31" class="guessesFormat" style="display: inline"></h2> <h2 id="g32" class="guessesFormat" style="display: inline"></h2> <h2 id="g33" class="guessesFormat" style="display: inline"></h2> <h2 id="g34" class="guessesFormat" style="display: inline"></h2> <h2 id="g35" class="guessesFormat" style="display: inline"></h2><br><br><br>
