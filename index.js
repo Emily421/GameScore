@@ -1,6 +1,8 @@
+/*
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
  }
+ */
 const express               = require('express')
 const app = express()
 // MongoDB database - tutorial from https://www.mongodb.com/blog/post/quick-start-nodejs-mongodb-how-to-get-connected-to-your-database
@@ -14,19 +16,21 @@ const { cursorTo }          = require('readline');
 const { stringify }         = require('querystring');
 const port                  = process.env.PORT || 3000
 // Authentication Dependencies
-const bcrypt                = require('bcryptjs') // BREAKS SITE
-const passport              = require('passport')    // This does not cause issue
-const flash                 = require('express-flash') // Does not cause issue
-const session               = require('express-session') // No
-const methodOverride        = require('method-override') // BREAKS SITE
 
+//const bcrypt                = require('bcrypt') // BREAKS SITE
+//const passport              = require('passport')    // This does not cause issue
+//const flash                 = require('express-flash') // Does not cause issue
+//const session               = require('express-session') // No
+//const methodOverride        = require('method-override') // BREAKS SITE
+
+/*
 const initializePassport    = require('./passport-config') // Not this one
 initializePassport (
   passport, 
   username => users.find(user => user.username === username),
   id => users.find(user => user.id === id)
 )
-
+*/
 const users = []
 var userScore = 0
 async function getRandomWord(client){
@@ -65,34 +69,37 @@ main().catch(console.error);
 
 var url = require('url');
 
-
+/*
 app.use(flash())
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
  }))
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(methodOverride('_method'))
+*/
+//app.use(passport.initialize())
+//app.use(passport.session())
+//app.use(methodOverride('_method'))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'static'))
-app.use(express.urlencoded({ extended: false }))
+//app.use(express.urlencoded({ extended: false }))
 
-app.get('/', checkAuthenticated, (request,response)=> {
-    response.render('home.ejs', {randomword: randomword, username: request.user.username, score: 0})
+app.get('/', /*checkAuthenticated*/ (request,response)=> {
+    response.render('home.ejs', {randomword: randomword, /*username: request.user.username, score: 0*/})
 })
-
+/*
 app.get('/login', checkNotAuthenticated, (request, response) => {
   response.render('login.ejs')
 })
-
+*/
+/*
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
 }))
-
+*/
+/*
 app.get('/register', checkNotAuthenticated, (request, response) => {
   response.render('register.ejs')
  })
@@ -110,7 +117,7 @@ app.post('/register', checkNotAuthenticated, async (request, response) => {
     response.redirect('/register')
   }
 })
-
+*/
 app.get('/random', (request, response) => {
 	console.log('Calling random word.')
 	response.type('text/plain')
@@ -130,12 +137,12 @@ app.get('/help', (request, response) => {
   console.log('Calling instruction page on server.')
   response.render('help.ejs')
 })
-
+/*
 app.delete('/logout', (request, response) => {
   request.logOut()
   response.redirect('/login')
 })
-
+*/
 // Custom 404 page.
 app.use((request, response) => {
   response.type('text/plain')
@@ -150,20 +157,20 @@ app.use((err, request, response, next) => {
   response.status(500)
   response.send('500 - Server Error')
 })
-/*
+
 app.post('/',(require,response)=>{
     response.render('index.ejs');
 })
-*/
 
 
+/*
 function checkAuthenticated(request, response, next) {
   if (request.isAuthenticated()) {
     return next()
   }
   response.redirect('/login')
 }
-
+*/
 function checkNotAuthenticated(request, response, next) {
   if (request.isAuthenticated()) {
     return response.redirect('/')
