@@ -35,23 +35,23 @@ main().catch(console.error);
 var url = require('url');
 const path = require('path');
 const { Server } = require('http');
-// const nodemon = require('nodemon');
-// const { restart } = require('nodemon');
+const nodemon = require('nodemon');
+const { restart } = require('nodemon');
 const port = process.env.PORT || 3000
-// const bcrypt = require('bcrypt')
-// const passport = require('passport')
-// const flash = require('express-flash')
-// const session = require('express-session')
-// const methodOverride = require('method-override')
+const bcrypt = require('bcrypt')
+const passport = require('passport')
+const flash = require('express-flash')
+const session = require('express-session')
+const methodOverride = require('method-override')
 // var userScore = 0
 
-// const initializePassport = require('./passport-config');
-// const { initialize } = require('passport');
-// initializePassport(
-//  passport, 
-//  username => users.find(user => user.username === username),
-//  id => users.find(user => user.id === id)
-// )
+const initializePassport = require('./passport-config');
+const { initialize } = require('passport');
+initializePassport(
+  passport, 
+  username => users.find(user => user.username === username),
+  id => users.find(user => user.id === id)
+ )
 const users = []
 
 // app.use(flash())
