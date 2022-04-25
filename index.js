@@ -51,8 +51,8 @@ const { stringify } = require('querystring');
 
 const port = process.env.PORT || 3000
 //const bcrypt = require('bcrypt') //     This causes issue when uncommented
-const passport = require('passport')    // Or this one
-//const flash = require('express-flash') // Nope
+const passport = require('passport')    // This does not cause issue
+const flash = require('express-flash') // Nope
 //const session = require('express-session') // No
 //const methodOverride = require('method-override') // no
 //var userScore = 0 // no
