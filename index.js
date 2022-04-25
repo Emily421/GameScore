@@ -35,8 +35,8 @@ main().catch(console.error);
 var url = require('url');
 const path = require('path');
 const { Server } = require('http');
-const nodemon = require('nodemon');
-const { restart } = require('nodemon');
+// const nodemon = require('nodemon');
+// const { restart } = require('nodemon');
 const port = process.env.PORT || 3000
 const bcrypt = require('bcrypt')
 const passport = require('passport')
