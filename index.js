@@ -50,7 +50,7 @@ const { cursorTo } = require('readline');
 const { stringify } = require('querystring');
 
 const port = process.env.PORT || 3000
-//const bcrypt = require('bcrypt') //     Not this one either
+const bcrypt = require('bcrypt') //     Not this one either
 //const passport = require('passport')    // Or this one
 //const flash = require('express-flash') // Nope
 //const session = require('express-session') // No
