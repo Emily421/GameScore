@@ -23,6 +23,7 @@
         button:active {
             background-color: #74a6ad;
         }
+
         #answer {
             background-color: #83ced7;
             color: white;
@@ -31,11 +32,13 @@
             text-decoration: none;
             font-size: 30px;
         }
+
         body {
             text-align: center;
             width: 50%;
             margin: auto;
         }
+
         .guessesFormat {
             border: none;
             border-radius: 20%;
@@ -45,11 +48,13 @@
             padding: 15px;
             font-size: 30px;
         }
+
         div {
             text-align: center;
             margin: auto;
             padding: 5px;
         }
+
         .instructions {
             background-color: white;
             border: 2px solid black;
@@ -63,7 +68,8 @@
             position: absolute;
             top: 0;
             left: 0;
-        } 
+        }
+
         .logout {
             background-color: white;
             border: 2px solid black;
@@ -87,6 +93,8 @@
         var theAnswer = "<%= randomword %>";
         theAnswer = theAnswer.toUpperCase();
         guesses = 0;
+        score = 0;
+        won = false;
 
         //This function replaces the "_" closest to the left with the guessed letter and displays the result.
         function getLetter(letter) {
@@ -109,24 +117,26 @@
 
         //Makes sure the guess is five letters and processes the guess.
         function submit() {
-            if(guess.includes("_")){
+            if (guess.includes("_")) {
                 return
             }
             guesses++;
             //document.getElementById("guess" + guesses).innerHTML = guesses + ": " + guess;
             if (guess.replace(/\s/g, '') === theAnswer) {
-                document.getElementById("result").innerHTML = "Correct!";
+                won = true;
+                document.getElementById("result").innerHTML = "Correct! Score: " + getScore();
             } else if (guesses == 6) {
-                document.getElementById("result").innerHTML = "Incorrect! The word was " + theAnswer;
+                won = false;
+                document.getElementById("result").innerHTML = "Incorrect! The word was '" + theAnswer + ".' Score: " + getScore();
             }
 
             if (theAnswer.indexOf(guess.charAt(0)) < 0) {
                 document.getElementById(guess.charAt(0)).style.background = '#2e2e2d';
                 changeLetterColor(guesses, guess.charAt(0), 1, '#2e2e2d');
-            }else if(guess.charAt(0) === theAnswer.charAt(0)){
+            } else if (guess.charAt(0) === theAnswer.charAt(0)) {
                 document.getElementById(guess.charAt(0)).style.background = '#3A8065';
                 changeLetterColor(guesses, guess.charAt(0), 1, '#3A8065');
-            }else{
+            } else {
                 document.getElementById(guess.charAt(0)).style.background = '#e3c020';
                 changeLetterColor(guesses, guess.charAt(0), 1, '#e3c020');
             }
@@ -134,10 +144,10 @@
             if (theAnswer.indexOf(guess.charAt(2)) < 0) {
                 document.getElementById(guess.charAt(2)).style.background = '#2e2e2d';
                 changeLetterColor(guesses, guess.charAt(2), 2, '#2e2e2d');
-            }else if(guess.charAt(2) === theAnswer.charAt(1)){
+            } else if (guess.charAt(2) === theAnswer.charAt(1)) {
                 document.getElementById(guess.charAt(2)).style.background = '#3A8065';
                 changeLetterColor(guesses, guess.charAt(2), 2, '#3A8065');
-            }else{
+            } else {
                 document.getElementById(guess.charAt(2)).style.background = '#e3c020';
                 changeLetterColor(guesses, guess.charAt(2), 2, '#e3c020');
             }
@@ -145,10 +155,10 @@
             if (theAnswer.indexOf(guess.charAt(4)) < 0) {
                 document.getElementById(guess.charAt(4)).style.background = '#2e2e2d';
                 changeLetterColor(guesses, guess.charAt(4), 3, '#2e2e2d');
-            }else if(guess.charAt(4) === theAnswer.charAt(2)){
+            } else if (guess.charAt(4) === theAnswer.charAt(2)) {
                 document.getElementById(guess.charAt(4)).style.background = '#3A8065';
                 changeLetterColor(guesses, guess.charAt(4), 3, '#3A8065');
-            }else{
+            } else {
                 document.getElementById(guess.charAt(4)).style.background = '#e3c020';
                 changeLetterColor(guesses, guess.charAt(4), 3, '#e3c020');
             }
@@ -156,10 +166,10 @@
             if (theAnswer.indexOf(guess.charAt(6)) < 0) {
                 document.getElementById(guess.charAt(6)).style.background = '#2e2e2d';
                 changeLetterColor(guesses, guess.charAt(6), 4, '#2e2e2d');
-            }else if(guess.charAt(6) === theAnswer.charAt(3)){
+            } else if (guess.charAt(6) === theAnswer.charAt(3)) {
                 document.getElementById(guess.charAt(6)).style.background = '#3A8065';
                 changeLetterColor(guesses, guess.charAt(6), 4, '#3A8065');
-            }else{
+            } else {
                 document.getElementById(guess.charAt(6)).style.background = '#e3c020';
                 changeLetterColor(guesses, guess.charAt(6), 4, '#e3c020');
             }
@@ -167,10 +177,10 @@
             if (theAnswer.indexOf(guess.charAt(8)) < 0) {
                 document.getElementById(guess.charAt(8)).style.background = '#2e2e2d';
                 changeLetterColor(guesses, guess.charAt(8), 5, '#2e2e2d');
-            }else if(guess.charAt(8) === theAnswer.charAt(4)){
+            } else if (guess.charAt(8) === theAnswer.charAt(4)) {
                 document.getElementById(guess.charAt(8)).style.background = '#3A8065';
                 changeLetterColor(guesses, guess.charAt(8), 5, '#3A8065');
-            }else{
+            } else {
                 document.getElementById(guess.charAt(8)).style.background = '#e3c020';
                 changeLetterColor(guesses, guess.charAt(8), 5, '#e3c020');
             }
@@ -180,18 +190,44 @@
             document.getElementById("answer").innerHTML = guess;
         }
 
-        function changeLetterColor(guesses, letter, pos, color){
+        function changeLetterColor(guesses, letter, pos, color) {
             document.getElementById("g" + guesses + pos).innerHTML = letter;
             document.getElementById("g" + guesses + pos).style.background = color;
+        }
+
+        function getScore() {
+            if (won == true) {
+                switch (guesses) {
+                    case 1:
+                        score += 500;
+                        break;
+                    case 2:
+                        score += 400;
+                        break;
+                    case 3:
+                        score += 300;
+                        break;
+                    case 4:
+                        score += 200;
+                        break;
+                    case 5:
+                        score += 100;
+                        break;
+                    case 6:
+                        score += 50;
+                        break;
+                }
+            }
+            return score;
         }
     </script>
 </head>
 
 <body onload="reloadServer()">
     <h1>GameScore - Inspired by Wordle</h1>
-    <h3>Created by the Scrumpateers - Emily, Connor, and Gabe</h3>  
+    <h3>Created by the Scrumpateers - Emily, Connor, and Gabe</h3>
     <a href="help">
-        <button class = "instructions">
+        <button class="instructions">
             Instructions
         </button>
     </a>
@@ -201,12 +237,36 @@
     </form>
     <div id="guesses">
         <h2 id="result"> </h2>
-        <h2 id="g11" class="guessesFormat" style="display: inline"></h2> <h2 id="g12" class="guessesFormat" style="display: inline"></h2> <h2 id="g13" class="guessesFormat" style="display: inline"></h2> <h2 id="g14" class="guessesFormat" style="display: inline"></h2> <h2 id="g15" class="guessesFormat" style="display: inline"></h2><br><br><br>
-        <h2 id="g21" class="guessesFormat" style="display: inline"></h2> <h2 id="g22" class="guessesFormat" style="display: inline"></h2> <h2 id="g23" class="guessesFormat" style="display: inline"></h2> <h2 id="g24" class="guessesFormat" style="display: inline"></h2> <h2 id="g25" class="guessesFormat" style="display: inline"></h2><br><br><br>
-        <h2 id="g31" class="guessesFormat" style="display: inline"></h2> <h2 id="g32" class="guessesFormat" style="display: inline"></h2> <h2 id="g33" class="guessesFormat" style="display: inline"></h2> <h2 id="g34" class="guessesFormat" style="display: inline"></h2> <h2 id="g35" class="guessesFormat" style="display: inline"></h2><br><br><br>
-        <h2 id="g41" class="guessesFormat" style="display: inline"></h2> <h2 id="g42" class="guessesFormat" style="display: inline"></h2> <h2 id="g43" class="guessesFormat" style="display: inline"></h2> <h2 id="g44" class="guessesFormat" style="display: inline"></h2> <h2 id="g45" class="guessesFormat" style="display: inline"></h2><br><br><br>
-        <h2 id="g51" class="guessesFormat" style="display: inline"></h2> <h2 id="g52" class="guessesFormat" style="display: inline"></h2> <h2 id="g53" class="guessesFormat" style="display: inline"></h2> <h2 id="g54" class="guessesFormat" style="display: inline"></h2> <h2 id="g55" class="guessesFormat" style="display: inline"></h2><br><br><br>
-        <h2 id="g61" class="guessesFormat" style="display: inline"></h2> <h2 id="g62" class="guessesFormat" style="display: inline"></h2> <h2 id="g63" class="guessesFormat" style="display: inline"></h2> <h2 id="g64" class="guessesFormat" style="display: inline"></h2> <h2 id="g65" class="guessesFormat" style="display: inline"></h2><br><br><br>
+        <h2 id="g11" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g12" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g13" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g14" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g15" class="guessesFormat" style="display: inline"></h2><br><br><br>
+        <h2 id="g21" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g22" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g23" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g24" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g25" class="guessesFormat" style="display: inline"></h2><br><br><br>
+        <h2 id="g31" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g32" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g33" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g34" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g35" class="guessesFormat" style="display: inline"></h2><br><br><br>
+        <h2 id="g41" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g42" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g43" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g44" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g45" class="guessesFormat" style="display: inline"></h2><br><br><br>
+        <h2 id="g51" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g52" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g53" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g54" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g55" class="guessesFormat" style="display: inline"></h2><br><br><br>
+        <h2 id="g61" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g62" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g63" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g64" class="guessesFormat" style="display: inline"></h2>
+        <h2 id="g65" class="guessesFormat" style="display: inline"></h2><br><br><br>
     </div>
     <h2 id="answer">_ _ _ _ _</h2>
     <div>
