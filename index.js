@@ -50,14 +50,14 @@ const { cursorTo } = require('readline');
 const { stringify } = require('querystring');
 
 const port = process.env.PORT || 3000
-//const bcrypt = require('bcrypt') //     This causes issue when uncommented
+//const bcrypt = require('bcrypt') // BREAKS SITE
 const passport = require('passport')    // This does not cause issue
 const flash = require('express-flash') // Does not cause issue
 const session = require('express-session') // No
-//const methodOverride = require('method-override') // no
+const methodOverride = require('method-override') // 
 //var userScore = 0 // no
 
-//const initializePassport = require('./passport-config');
+const initializePassport = require('./passport-config'); // Not this one
 /*
 const { initialize } = require('passport');
 initializePassport(
