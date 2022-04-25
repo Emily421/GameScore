@@ -44,21 +44,21 @@ main().catch(console.error);
 var url = require('url');
 const path = require('path');
 const { Server } = require('http');
-const nodemon = require('nodemon');
+// const nodemon = require('nodemon');
 const { restart } = require('nodemon');
 const { cursorTo } = require('readline');
 const { stringify } = require('querystring');
 
 const port = process.env.PORT || 3000
-const bcrypt = require('bcrypt') //     Not this one either
-const passport = require('passport')    // Or this one
-const flash = require('express-flash') // Nope
-const session = require('express-session') // No
-const methodOverride = require('method-override') // no
-var userScore = 0 // no
+//const bcrypt = require('bcrypt') //     Not this one either
+//const passport = require('passport')    // Or this one
+//const flash = require('express-flash') // Nope
+//const session = require('express-session') // No
+//const methodOverride = require('method-override') // no
+//var userScore = 0 // no
 
-const initializePassport = require('./passport-config');
-
+//const initializePassport = require('./passport-config');
+/*
 const { initialize } = require('passport');
 initializePassport(
   passport, 
@@ -67,7 +67,7 @@ initializePassport(
  )
  
 const users = []
-
+*/
 // app.use(flash())
 // app.use(session({
 //  secret: process.env.SESSION_SECRET,
