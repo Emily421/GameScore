@@ -38,10 +38,10 @@ const { Server } = require('http');
 const nodemon = require('nodemon');   // Not this dependency
 const { restart } = require('nodemon'); // or this one
 const port = process.env.PORT || 3000
-// const bcrypt = require('bcrypt')
-// const passport = require('passport')
-const flash = require('express-flash')
-const session = require('express-session')
+const bcrypt = require('bcrypt') //     Not this one either
+const passport = require('passport')    // Or this one
+//const flash = require('express-flash')
+//const session = require('express-session')
 const methodOverride = require('method-override')
 // var userScore = 0
 
