@@ -42,16 +42,18 @@ const bcrypt = require('bcrypt') //     Not this one either
 const passport = require('passport')    // Or this one
 const flash = require('express-flash') // Nope
 const session = require('express-session') // No
-// const methodOverride = require('method-override')
-// var userScore = 0
+const methodOverride = require('method-override') // no
+var userScore = 0 // n
 
 // const initializePassport = require('./passport-config');
+/*
 const { initialize } = require('passport');
 initializePassport(
   passport, 
   username => users.find(user => user.username === username),
   id => users.find(user => user.id === id)
  )
+ */
 const users = []
 
 // app.use(flash())
