@@ -137,6 +137,11 @@ app.get('/help', (request, response) => {
   console.log('Calling instruction page on server.')
   response.render('help.ejs')
 })
+
+app.get('/contact', (request, response) => {
+  console.log('Calling contact form on server')
+  response.render('contact.ejs')
+})
 /*
 app.delete('/logout', (request, response) => {
   request.logOut()
