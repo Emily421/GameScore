@@ -13,7 +13,7 @@ const { stringify }         = require('querystring');
 const port                  = process.env.PORT || 3000
 // Authentication Dependencies
 
-const bcrypt                = require('bcrypt'); // BREAKS SITE
+const bcrypt                = require('bcryptjs'); // BREAKS SITE
 const passport              = require('passport');    // This does not cause issue
 const hbs                   = require('express-handlebars')
 const session               = require('express-session'); // No
