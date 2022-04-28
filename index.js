@@ -15,10 +15,8 @@ const port                  = process.env.PORT || 3000
 
 const bcrypt                = require('bcrypt'); // BREAKS SITE
 const passport              = require('passport');    // This does not cause issue
-const flash                 = require('express-flash'); // Does not cause issue
 const hbs                   = require('express-handlebars')
 const session               = require('express-session'); // No
-const methodOverride        = require('method-override'); // BREAKS SITE
 const mongoose              = require('mongoose');
 const LocalStrategy         = require('passport-local').Strategy;
 
@@ -231,7 +229,7 @@ app.use((err, request, response, next) => {
 })
 
 app.post('/',(require,response)=>{
-    response.render('index.ejs');
+    response.render('home.ejs');
 })
 
 
