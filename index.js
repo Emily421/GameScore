@@ -1,8 +1,4 @@
-/*
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
- }
- */
+ 
 const express               = require('express')
 const app = express()
 // MongoDB database - tutorial from https://www.mongodb.com/blog/post/quick-start-nodejs-mongodb-how-to-get-connected-to-your-database
@@ -17,21 +13,84 @@ const { stringify }         = require('querystring');
 const port                  = process.env.PORT || 3000
 // Authentication Dependencies
 
-//const bcrypt                = require('bcrypt') // BREAKS SITE
-const passport              = require('passport')    // This does not cause issue
-const flash                 = require('express-flash') // Does not cause issue
-const session               = require('express-session') // No
-//const methodOverride        = require('method-override') // BREAKS SITE
+const bcrypt                = require('bcrypt'); // BREAKS SITE
+const passport              = require('passport');    // This does not cause issue
+const flash                 = require('express-flash'); // Does not cause issue
+const hbs                   = require('express-handlebars')
+const session               = require('express-session'); // No
+const methodOverride        = require('method-override'); // BREAKS SITE
+const mongoose              = require('mongoose');
+const LocalStrategy         = require('passport-local').Strategy;
 
-/*
-const initializePassport    = require('./passport-config') // Not this one
-initializePassport (
-  passport, 
-  username => users.find(user => user.username === username),
-  id => users.find(user => user.id === id)
-)
-*/
-const users = []
+var fs = require('fs')
+
+mongoose.connect("mongodb+srv://gamescoreapplication:gamescore@gamescore.hhvnf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+
+const UserSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  }
+  // Need to implement score in here somehow
+})
+
+const User = mongoose.model('User', UserSchema)
+
+// Middleware
+app.engine('hbs', hbs.engine({ extname: '.hbs' }))
+app.set('view engine', 'hbs')
+app.use(express.static(__dirname + '/public'))
+app.use(session({
+  secret: "verygoodsecret",
+  resave: false,
+  saveUninitialized: true
+}))
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
+
+// Passport.js
+app.use(passport.initialize())
+app.use(passport.session())
+
+passport.serializeUser(function (user, done) {
+  done(null, user.id)
+})
+
+passport.deserializeUser(function (id, done) {
+  // Setup user model
+  User.findById(id, function (err, user) {
+    done(err, user)
+  })
+})
+
+passport.use(new LocalStrategy(function (username, password, done) {
+  User.findOne({ username: username }, function(err, user) {
+    if (err) { return done(err) } 
+    if (!user) return done(null, false, {message: 'Incorrect Username'}) 
+    bcrypt.compare(password, user.password, function (err, res) {
+      if (err) return done(err) 
+      if (res === false) return done(null, false, { message: 'Incorrect Password. '})
+      return done(null, user)    
+    })
+  })
+}))
+
+function isLoggedIn(request, response, next) {
+  if (request.isAuthenticated()) return next()
+  response.redirect('/login')
+}
+function isLoggedOut(request, response, next) {
+  if (!request.isAuthenticated()) return next()
+  response.redirect('/')
+}
+
 var userScore = 0
 async function getRandomWord(client){
   max = 60
@@ -68,56 +127,67 @@ main().catch(console.error);
 //
 
 var url = require('url');
+const { fstat } = require('fs');
 
-/*
-app.use(flash())
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false
- }))
-*/
-//app.use(passport.initialize())
-//app.use(passport.session())
-//app.use(methodOverride('_method'))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'static'))
-//app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false }))
 
-app.get('/', /*checkAuthenticated*/ (request,response)=> {
-    response.render('home.ejs', {randomword: randomword, /*username: request.user.username, score: 0*/})
-})
-/*
-app.get('/login', checkNotAuthenticated, (request, response) => {
-  response.render('login.ejs')
-})
-*/
-/*
-app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-}))
-*/
-/*
-app.get('/register', checkNotAuthenticated, (request, response) => {
-  response.render('register.ejs')
- })
-
-app.post('/register', checkNotAuthenticated, async (request, response) => {
-  try {
-    const hashedPassword = await bcrypt.hash(request.body.password, 10)
-    users.push({
-      id: Date.now().toString(),
-      username: request.body.username,
-      password: hashedPassword
-    })
-    response.redirect('/login')
-  } catch {
-    response.redirect('/register')
+// ROUTES
+app.get('/login', isLoggedOut, (request, response) => {
+  const res = {
+    title: "Login",
+    error: request.query.error
   }
+  response.render('login', res)
 })
-*/
+
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login?error=true' 
+}))
+
+app.get('/logout', function (request, response) {
+  request.logout()
+  response.redirect('/')
+})
+
+app.get('/register', (request, response) => {
+  fs.readFile(__dirname + '/static/register.ejs', function(err, data) {
+    response.writeHead(200, {'Content-Type': 'text/html'})
+    response.write(data)
+    return response.end()
+  })
+})
+
+app.post('/register/done', async (request, response) => {
+  const exists = await User.exists({ username: request.body.username })
+  if (exists) {
+    response.send("Username already in use.")
+    response.redirect('/login')
+    return
+  }
+  bcrypt.genSalt(10, function (err, salt) {
+    if (err) return next(err)
+    bcrypt.hash(request.body.password, salt, function (err, hash) {
+      if (err) return next(err)
+      const newAdmin = new User({
+        username: request.body.username,
+        password: hash
+      })
+      newAdmin.save()
+      response.redirect('/login')
+    })
+  })
+})
+
+app.get('/', isLoggedIn, (request,response)=> {
+  response.render('home.ejs', {randomword: randomword})
+    
+})
+
+
+
 app.get('/random', (request, response) => {
 	console.log('Calling random word.')
 	response.type('text/plain')
@@ -142,12 +212,9 @@ app.get('/contact', (request, response) => {
   console.log('Calling contact form on server')
   response.render('contact.ejs')
 })
-/*
-app.delete('/logout', (request, response) => {
-  request.logOut()
-  response.redirect('/login')
-})
-*/
+
+
+
 // Custom 404 page.
 app.use((request, response) => {
   response.type('text/plain')
@@ -168,20 +235,9 @@ app.post('/',(require,response)=>{
 })
 
 
-/*
-function checkAuthenticated(request, response, next) {
-  if (request.isAuthenticated()) {
-    return next()
-  }
-  response.redirect('/login')
-}
-*/
-function checkNotAuthenticated(request, response, next) {
-  if (request.isAuthenticated()) {
-    return response.redirect('/')
-  }
-  next()
-}
+
+
+
 
 app.listen(port, () => console.log(
   `Express started at \"http://localhost:${port}\"\n` +
