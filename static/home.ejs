@@ -99,6 +99,7 @@
         won = false;
         gameOver = false;
         streak = 0;
+        var x = 1;
 
         //This function replaces the "_" closest to the left with the guessed letter and displays the result.
         function getLetter(letter) {
@@ -124,7 +125,23 @@
                 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
                 'Y', 'Z']
             won = false;
-            fetch("/reload")
+            x = x + 1;
+            if (x == 2) {
+                theAnswer = "<%= randomword2 %>";
+                theAnswer = theAnswer.toUpperCase();
+            } else if (x == 3) {
+                theAnswer = "<%= randomword3 %>";
+                theAnswer = theAnswer.toUpperCase();
+            } else if (x == 4) {
+                theAnswer = "<%= randomword4 %>";
+                theAnswer = theAnswer.toUpperCase();
+            } else if (x == 5) {
+                theAnswer = "<%= randomword5 %>";
+                theAnswer = theAnswer.toUpperCase();
+            } else {
+                document.getElementById("continue").innerHTML = "You have reached the max streak! Congrats. Refresh the page to play more.";
+                return;
+            }
             guesses = 0;
             document.getElementById("continue").innerHTML = ""
             document.getElementById("result").innerHTML = ""
@@ -158,7 +175,7 @@
                     won = true;
                     streak++;
                     document.getElementById("result").innerHTML = "Correct! Score: " + getScore() + ", Current Streak: " + streak;
-                    document.getElementById("continue").innerHTML = "Press submit to play again and continue your streak!"
+                    document.getElementById("continue").innerHTML = "Press submit to play again and continue your streak! Max 5."
                 } else if (guesses == 6) {
                     won = false;
                     document.getElementById("result").innerHTML = "Incorrect! The word was '" + theAnswer + ".' Final Score: " + getScore() + ", Streak: " + streak;

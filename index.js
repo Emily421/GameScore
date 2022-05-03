@@ -105,6 +105,66 @@ async function getRandomWord(client){
   twos = twos.replaceAll('\\', '')
   randomword = twos;
 }
+async function getRandomWord2(client){
+  max = 60
+  random = Math.floor(Math.random() * max);
+  const randomdoc = await client.db("gamescore_words").collection("word_list").findOne({number: random.toString()});
+  const randomdocword = JSON.stringify(randomdoc);
+  var words = randomdocword.split(",");
+  max2 = 54
+  random2 = Math.floor(Math.random() * max2);
+  lines = words[random2];
+  var threes = lines.split(" ")
+  twos = threes[1]
+  twos = twos.replaceAll('"', '')
+  twos = twos.replaceAll('\\', '')
+  randomword2 = twos;
+}
+async function getRandomWord3(client){
+  max = 60
+  random = Math.floor(Math.random() * max);
+  const randomdoc = await client.db("gamescore_words").collection("word_list").findOne({number: random.toString()});
+  const randomdocword = JSON.stringify(randomdoc);
+  var words = randomdocword.split(",");
+  max2 = 54
+  random2 = Math.floor(Math.random() * max2);
+  lines = words[random2];
+  var threes = lines.split(" ")
+  twos = threes[1]
+  twos = twos.replaceAll('"', '')
+  twos = twos.replaceAll('\\', '')
+  randomword3 = twos;
+}
+async function getRandomWord4(client){
+  max = 60
+  random = Math.floor(Math.random() * max);
+  const randomdoc = await client.db("gamescore_words").collection("word_list").findOne({number: random.toString()});
+  const randomdocword = JSON.stringify(randomdoc);
+  var words = randomdocword.split(",");
+  max2 = 54
+  random2 = Math.floor(Math.random() * max2);
+  lines = words[random2];
+  var threes = lines.split(" ")
+  twos = threes[1]
+  twos = twos.replaceAll('"', '')
+  twos = twos.replaceAll('\\', '')
+  randomword4 = twos;
+}
+async function getRandomWord5(client){
+  max = 60
+  random = Math.floor(Math.random() * max);
+  const randomdoc = await client.db("gamescore_words").collection("word_list").findOne({number: random.toString()});
+  const randomdocword = JSON.stringify(randomdoc);
+  var words = randomdocword.split(",");
+  max2 = 54
+  random2 = Math.floor(Math.random() * max2);
+  lines = words[random2];
+  var threes = lines.split(" ")
+  twos = threes[1]
+  twos = twos.replaceAll('"', '')
+  twos = twos.replaceAll('\\', '')
+  randomword5 = twos;
+}
 
 async function main() {
 	const uri = "mongodb+srv://gamescoreapplication:gamescore@gamescore.hhvnf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -113,6 +173,10 @@ async function main() {
     await client.connect();
     // Call function
     await  getRandomWord(client);
+    await  getRandomWord2(client);
+    await  getRandomWord3(client);
+    await  getRandomWord4(client);
+    await  getRandomWord5(client);
 
   } catch (e) {
     console.error(e);
@@ -190,6 +254,10 @@ app.get('/random', (request, response) => {
 	console.log('Calling random word.')
 	response.type('text/plain')
 	response.send(randomword);
+  response.send(randomword2);
+  response.send(randomword3);
+  response.send(randomword4);
+  response.send(randomword5);
 })
 
 app.get('/proposal', (request, response) => {
