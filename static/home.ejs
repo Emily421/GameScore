@@ -97,6 +97,8 @@
         guesses = 0;
         score = 0;
         won = false;
+        gameOver = false;
+        streak = 0;
 
         //This function replaces the "_" closest to the left with the guessed letter and displays the result.
         function getLetter(letter) {
@@ -117,79 +119,111 @@
             document.getElementById("answer").innerHTML = guess;
         }
 
+        function reset() {
+            alp = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+                'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+                'Y', 'Z']
+            won = false;
+            fetch("/reload")
+            guesses = 0;
+            document.getElementById("continue").innerHTML = ""
+            document.getElementById("result").innerHTML = ""
+            for (var o = 0; o < 6; o++) {
+                for (var d = 0; d < 6; d++) {
+                    try {
+                        document.getElementById("g" + o + d).innerHTML = ""
+                        document.getElementById("g" + o + d).style.background = '#ffffff';
+                    } catch (error) {
+
+                    }
+                }
+            }
+            for (var i = 0; i < 26; i++) {
+                document.getElementById(alp[i]).style.background = '#41bcca';
+            }
+        }
+
         //Makes sure the guess is five letters and processes the guess.
         function submit() {
-            if (guess.includes("_")) {
-                return
+            if (gameOver == false && won == true) {
+                reset()
             }
-            guesses++;
-            //document.getElementById("guess" + guesses).innerHTML = guesses + ": " + guess;
-            if (guess.replace(/\s/g, '') === theAnswer) {
-                won = true;
-                document.getElementById("result").innerHTML = "Correct! Score: " + getScore();
-            } else if (guesses == 6) {
-                won = false;
-                document.getElementById("result").innerHTML = "Incorrect! The word was '" + theAnswer + ".' Score: " + getScore();
+            if (gameOver == false) {
+                if (guess.includes("_")) {
+                    return
+                }
+                guesses++;
+                //document.getElementById("guess" + guesses).innerHTML = guesses + ": " + guess;
+                if (guess.replace(/\s/g, '') === theAnswer) {
+                    won = true;
+                    streak++;
+                    document.getElementById("result").innerHTML = "Correct! Score: " + getScore() + ", Current Streak: " + streak;
+                    document.getElementById("continue").innerHTML = "Press submit to play again and continue your streak!"
+                } else if (guesses == 6) {
+                    won = false;
+                    document.getElementById("result").innerHTML = "Incorrect! The word was '" + theAnswer + ".' Final Score: " + getScore() + ", Streak: " + streak;
+                    gameOver = true;
+                }
+
+                if (theAnswer.indexOf(guess.charAt(0)) < 0) {
+                    document.getElementById(guess.charAt(0)).style.background = '#2e2e2d';
+                    changeLetterColor(guesses, guess.charAt(0), 1, '#2e2e2d');
+                } else if (guess.charAt(0) === theAnswer.charAt(0)) {
+                    document.getElementById(guess.charAt(0)).style.background = '#3A8065';
+                    changeLetterColor(guesses, guess.charAt(0), 1, '#3A8065');
+                } else {
+                    document.getElementById(guess.charAt(0)).style.background = '#e3c020';
+                    changeLetterColor(guesses, guess.charAt(0), 1, '#e3c020');
+                }
+
+                if (theAnswer.indexOf(guess.charAt(2)) < 0) {
+                    document.getElementById(guess.charAt(2)).style.background = '#2e2e2d';
+                    changeLetterColor(guesses, guess.charAt(2), 2, '#2e2e2d');
+                } else if (guess.charAt(2) === theAnswer.charAt(1)) {
+                    document.getElementById(guess.charAt(2)).style.background = '#3A8065';
+                    changeLetterColor(guesses, guess.charAt(2), 2, '#3A8065');
+                } else {
+                    document.getElementById(guess.charAt(2)).style.background = '#e3c020';
+                    changeLetterColor(guesses, guess.charAt(2), 2, '#e3c020');
+                }
+
+                if (theAnswer.indexOf(guess.charAt(4)) < 0) {
+                    document.getElementById(guess.charAt(4)).style.background = '#2e2e2d';
+                    changeLetterColor(guesses, guess.charAt(4), 3, '#2e2e2d');
+                } else if (guess.charAt(4) === theAnswer.charAt(2)) {
+                    document.getElementById(guess.charAt(4)).style.background = '#3A8065';
+                    changeLetterColor(guesses, guess.charAt(4), 3, '#3A8065');
+                } else {
+                    document.getElementById(guess.charAt(4)).style.background = '#e3c020';
+                    changeLetterColor(guesses, guess.charAt(4), 3, '#e3c020');
+                }
+
+                if (theAnswer.indexOf(guess.charAt(6)) < 0) {
+                    document.getElementById(guess.charAt(6)).style.background = '#2e2e2d';
+                    changeLetterColor(guesses, guess.charAt(6), 4, '#2e2e2d');
+                } else if (guess.charAt(6) === theAnswer.charAt(3)) {
+                    document.getElementById(guess.charAt(6)).style.background = '#3A8065';
+                    changeLetterColor(guesses, guess.charAt(6), 4, '#3A8065');
+                } else {
+                    document.getElementById(guess.charAt(6)).style.background = '#e3c020';
+                    changeLetterColor(guesses, guess.charAt(6), 4, '#e3c020');
+                }
+
+                if (theAnswer.indexOf(guess.charAt(8)) < 0) {
+                    document.getElementById(guess.charAt(8)).style.background = '#2e2e2d';
+                    changeLetterColor(guesses, guess.charAt(8), 5, '#2e2e2d');
+                } else if (guess.charAt(8) === theAnswer.charAt(4)) {
+                    document.getElementById(guess.charAt(8)).style.background = '#3A8065';
+                    changeLetterColor(guesses, guess.charAt(8), 5, '#3A8065');
+                } else {
+                    document.getElementById(guess.charAt(8)).style.background = '#e3c020';
+                    changeLetterColor(guesses, guess.charAt(8), 5, '#e3c020');
+                }
+
+
+                guess = "_ _ _ _ _"
+                document.getElementById("answer").innerHTML = guess;
             }
-
-            if (theAnswer.indexOf(guess.charAt(0)) < 0) {
-                document.getElementById(guess.charAt(0)).style.background = '#2e2e2d';
-                changeLetterColor(guesses, guess.charAt(0), 1, '#2e2e2d');
-            } else if (guess.charAt(0) === theAnswer.charAt(0)) {
-                document.getElementById(guess.charAt(0)).style.background = '#3A8065';
-                changeLetterColor(guesses, guess.charAt(0), 1, '#3A8065');
-            } else {
-                document.getElementById(guess.charAt(0)).style.background = '#e3c020';
-                changeLetterColor(guesses, guess.charAt(0), 1, '#e3c020');
-            }
-
-            if (theAnswer.indexOf(guess.charAt(2)) < 0) {
-                document.getElementById(guess.charAt(2)).style.background = '#2e2e2d';
-                changeLetterColor(guesses, guess.charAt(2), 2, '#2e2e2d');
-            } else if (guess.charAt(2) === theAnswer.charAt(1)) {
-                document.getElementById(guess.charAt(2)).style.background = '#3A8065';
-                changeLetterColor(guesses, guess.charAt(2), 2, '#3A8065');
-            } else {
-                document.getElementById(guess.charAt(2)).style.background = '#e3c020';
-                changeLetterColor(guesses, guess.charAt(2), 2, '#e3c020');
-            }
-
-            if (theAnswer.indexOf(guess.charAt(4)) < 0) {
-                document.getElementById(guess.charAt(4)).style.background = '#2e2e2d';
-                changeLetterColor(guesses, guess.charAt(4), 3, '#2e2e2d');
-            } else if (guess.charAt(4) === theAnswer.charAt(2)) {
-                document.getElementById(guess.charAt(4)).style.background = '#3A8065';
-                changeLetterColor(guesses, guess.charAt(4), 3, '#3A8065');
-            } else {
-                document.getElementById(guess.charAt(4)).style.background = '#e3c020';
-                changeLetterColor(guesses, guess.charAt(4), 3, '#e3c020');
-            }
-
-            if (theAnswer.indexOf(guess.charAt(6)) < 0) {
-                document.getElementById(guess.charAt(6)).style.background = '#2e2e2d';
-                changeLetterColor(guesses, guess.charAt(6), 4, '#2e2e2d');
-            } else if (guess.charAt(6) === theAnswer.charAt(3)) {
-                document.getElementById(guess.charAt(6)).style.background = '#3A8065';
-                changeLetterColor(guesses, guess.charAt(6), 4, '#3A8065');
-            } else {
-                document.getElementById(guess.charAt(6)).style.background = '#e3c020';
-                changeLetterColor(guesses, guess.charAt(6), 4, '#e3c020');
-            }
-
-            if (theAnswer.indexOf(guess.charAt(8)) < 0) {
-                document.getElementById(guess.charAt(8)).style.background = '#2e2e2d';
-                changeLetterColor(guesses, guess.charAt(8), 5, '#2e2e2d');
-            } else if (guess.charAt(8) === theAnswer.charAt(4)) {
-                document.getElementById(guess.charAt(8)).style.background = '#3A8065';
-                changeLetterColor(guesses, guess.charAt(8), 5, '#3A8065');
-            } else {
-                document.getElementById(guess.charAt(8)).style.background = '#e3c020';
-                changeLetterColor(guesses, guess.charAt(8), 5, '#e3c020');
-            }
-
-
-            guess = "_ _ _ _ _"
-            document.getElementById("answer").innerHTML = guess;
         }
 
         function changeLetterColor(guesses, letter, pos, color) {
@@ -239,6 +273,7 @@
     </form>
     <div id="guesses">
         <h2 id="result"> </h2>
+        <h2 id="continue"> </h2>
         <h2 id="g11" class="guessesFormat" style="display: inline"></h2>
         <h2 id="g12" class="guessesFormat" style="display: inline"></h2>
         <h2 id="g13" class="guessesFormat" style="display: inline"></h2>
